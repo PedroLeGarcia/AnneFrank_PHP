@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 //conexão
 $user = 'root';
 $pass = '';
@@ -99,6 +99,15 @@ function CadastrarGenero($nome){
 		echo "Erro ao Cadastrar".$GLOBALS['conn']->error;
 	}
 }
+
+function ListarGenero($cd){
+	$sql = 'SELECT * FROM genero';
+	if($cd !=""){
+		$sql.= ' WHERE cd = '.$cd;
+	}
+	$res = $GLOBALS['conn']->query($sql);	
+	return $res;
+}
 function ExcluirGenero($cd){
 	$sql = 'DELETE FROM genero WHERE cd = '.$cd;
 	$res = $GLOBALS['conn']->query($sql);
@@ -109,12 +118,58 @@ function ExcluirGenero($cd){
 	}
 }
 
-function ListarGenero($gen){
-	$sql = 'SELECT * FROM genero';
-    if($gen !=""){
-        $sql.= ' WHERE cd = ' .$cd;
-    }
+function CadastrarAutor($nome){
+	$sql = 'INSERT INTO autor VALUES(null,"'.$nome.'")';
 	$res = $GLOBALS['conn']->query($sql);
+	if($res){		
+		echo "Autor Cadastrado";
+	}else{
+		echo "Erro ao Cadastrar".$GLOBALS['conn']->error;
+	}
+}
+
+function ListarAutor($cd){
+	$sql = 'SELECT * FROM autor';
+	if($cd !=""){
+		$sql.= ' WHERE cd = '.$cd;
+	}
+	$res = $GLOBALS['conn']->query($sql);	
 	return $res;
-    
+}
+function ExcluirAutor($cd){
+	$sql = 'DELETE FROM autor WHERE cd = '.$cd;
+	$res = $GLOBALS['conn']->query($sql);
+	if($res){		
+		echo "Autor Excluído";
+	}else{
+		echo "Erro ao Excluir, verifique se há livros utilizando.";
+	}
+}
+
+function CadastrarEditora($nome){
+	$sql = 'INSERT INTO editora VALUES(null,"'.$nome.'")';
+	$res = $GLOBALS['conn']->query($sql);
+	if($res){		
+		echo "Editora Cadastrada";
+	}else{
+		echo "Erro ao Cadastrar".$GLOBALS['conn']->error;
+	}
+}
+
+function ListarEditora($cd){
+	$sql = 'SELECT * FROM editora';
+	if($cd !=""){
+		$sql.= ' WHERE cd = '.$cd;
+	}
+	$res = $GLOBALS['conn']->query($sql);	
+	return $res;
+}
+function ExcluirEditora($cd){
+	$sql = 'DELETE FROM editora WHERE cd = '.$cd;
+	$res = $GLOBALS['conn']->query($sql);
+	if($res){		
+		echo "Editora Excluída";
+	}else{
+		echo "Erro ao Excluir, verifique se há livros utilizando.";
+	}
 }
