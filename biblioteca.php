@@ -173,3 +173,12 @@ function ExcluirEditora($cd){
 		echo "Erro ao Excluir, verifique se há livros utilizando.";
 	}
 }
+
+function ListarLivro($cd){
+	$sql = 'SELECT * FROM livro';
+	if($cd>0){
+		$sql.=' WHERE cd ='.$cd;
+	} 
+	$res = $GLOBALS['conn']->query($sql);
+	return $res;
+}
