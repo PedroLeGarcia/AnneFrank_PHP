@@ -1,21 +1,44 @@
 <?php
 include('biblioteca.php');
 ?>
-<h1>Olá <?php echo $_SESSION['nome']; ?> </h1>
+<style type="text/css">
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Rubik', sans-serif;
+	color: #fff;
+}
+body{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #2980B9;  
+    background: -webkit-linear-gradient(to top, #FFFFFF, #6DD5FA, #2980B9);
+    background: linear-gradient(to top, #FFFFFF, #6DD5FA, #2980B9); 
+}
+.tittle{
+	
+}
+</style>
+<div class="container">
+	<div class="tittle">
+		<h1>Olá <?php echo $_SESSION['nome']; ?>! </h1>
+	</div>
 
-<form id="novoGenero" method="post">
-	<fieldset>
-		<legend>Novo Gênero</legend>
-		Nome: <input type="text" name="genero"><br>
-		<button>Cadatrar</button>
-	</fieldset>
-</form>
+	<div class="form-novoGenero">
+		<form id="novoGenero" method="post">
+				<h2>Novo Genêro</h2><br>
+					<input type="text" name="genero" placeholder="Nome do Genêro..."><br><br>
+				<button>Cadatrar</button>
+		</form>
 <?php
 	if(isset($_POST['genero'])){
 		CadastrarGenero($_POST['genero']);
 	}
 ?>
-<h1>Gêneros Cadastrados</h1>
+<h2>Gêneros Cadastrados</h2>
 <table>
 	<tr>
 		<td>Nome</td>
@@ -35,21 +58,23 @@ include('biblioteca.php');
 				</tr>';		}
 	?>
 	</table>
-		<br>
-	<form id="novoAutor" method="post">
-	<fieldset>
-		<legend>Novo Autor</legend>
-		Nome: <input type="text" name="autor"><br>
-		<button>Cadatrar</button>
-	</fieldset>
-</form>
+	</div> <!--fim do form-novoGenero-->
+
+	<br><hr><br>
+
+	<div class="form-autor">
+		<form id="novoAutor" method="post">
+			<h2>Novo autor</h2><br>
+			<input type="text" name="autor" placeholder="Nome do Autor..."><br><br>
+			<button>Cadatrar</button>
+		</form>
 <?php
 	if(isset($_POST['autor'])){
 		CadastrarAutor($_POST['autor']);
 	}
 ?>
 
-<h1>Autores Cadastrados</h1>
+<h2>Autores Cadastrados</h2>
 <table>
 	<tr>
 		<td>Nome</td>
@@ -69,22 +94,23 @@ include('biblioteca.php');
 				</tr>';		}
 	?>
 	</table>
-	<br>
+	</div><!--fim do form-autor-->
+	
+	<br><hr><br>
 
-	<form id="novaEditora" method="post">
-	<fieldset>
-		<legend>Nova Editora</legend>
-		Nome: <input type="text" name="editora"><br>
+	<div class="form-editora">
+	<form id="novaEditora" method="post"><br>
+		<h2>Nova Editora</h2><br>
+		<input type="text" name="editora" placeholder="Nome da Editora..."><br><br>
 		<button>Cadatrar</button>
-	</fieldset>
-</form>
+	</form>
 <?php
 	if(isset($_POST['editora'])){
 		CadastrarEditora($_POST['editora']);
 	}
 ?>
 
-<h1>Editoras Cadastradas</h1>
+<h2>Editoras Cadastradas</h2>
 <table>
 	<tr>
 		<td>Nome</td>
@@ -104,3 +130,6 @@ include('biblioteca.php');
 				</tr>';		}
 	?>
 	</table>
+	<br><hr><br>
+	</div>
+</div>
