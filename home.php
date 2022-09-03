@@ -85,7 +85,7 @@ table tr td{
 <div class="container">
 	<div class="form"><br>
 		<div class="form-header">
-			<div class="title"> <h1>Olá! </h1> </div>
+			<div class="title"> <h1>Olá<?php echo $_SESSION['nome']; ?>! </h1> </div>
 		</div>
 	<div class="input-group">
 		<form id="novoGenero" method="post">
