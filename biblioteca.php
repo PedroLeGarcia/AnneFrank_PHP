@@ -174,6 +174,18 @@ function ExcluirEditora($cd){
 	}
 }
 
+function CadastrarLivro($isbn, $titulo, $ano, $qtd, $sinopse, $classificacao, $id_editora, $id_genero, $estado, $$capa, $autores){
+	$sql = 'INSERT INTO livro(isbn, titulo, ano, qtd, sinopse, classificacao, id_editora, id_genero, estado, capa) VALUES ("'.$isbn.'","'.$titulo.'","'.$ano.'","'.$qtd. '","'.$sinopse.'","'.$classificacao.'","'.$id_editora.'","'.$id_genero.'","'.$estado.'","'.$capa.'")';
+	$res = $GLOBALS['conn']->query($sql);
+	if($res){
+		echo "Livro cadastrado com sucesso!!!";
+	}else{
+		echo "Erro ao cadastrar";
+	}
+	
+} 
+
+
 function ListarLivro($cd){
 	$sql = 'SELECT * FROM livro';
 	if($cd>0){

@@ -11,13 +11,9 @@ include('biblioteca.php');
 }
 body{
 	width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    min-height: 100%;
     background: #2980B9;  
-    background: -webkit-linear-gradient(to top, #FFFFFF, #6DD5FA, #2980B9);
-    background: linear-gradient(to top, #FFFFFF, #6DD5FA, #2980B9); 
+    background: radial-gradient(#2980B9,#6DD5FA );
 }
 .container{
 	display: flex;
@@ -36,9 +32,6 @@ body{
 }
 .title h1{
 	margin-bottom: 0.5rem;
-}
-.title h2{
-
 }
 .input-group{
 	display: flex;
@@ -79,7 +72,17 @@ body{
 	color: #fff;
 }
 table tr td{
-	color: #1E90FF;
+	color: #fff;
+}
+.livro{
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+
+}
+.livro img{
+	width: 10rem;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 </style>
 <div class="container">
@@ -193,13 +196,29 @@ table tr td{
 		while($editora = $todos->fetch_object()){
 			echo '<tr>
 					<td>'.$editora->nome.'</td>
-					<td>
-						<a href="?excluir_autor='.$editora->cd.'">Excluir</a>
-					</td>
 				</tr>';		}
 	?>
 	</table>
 	<br><hr><br>
+
 		</div><!--fim do input-group-->
+	<div class="livro">
+		<h2>Livros Cadastrados</h2>
+		<?php
+			$fLivro = ListarLivro("");
+			while ($livros = $fLivro->fetch_object()) {
+				echo '
+					<br>
+					<h3>'.$livros->titulo.'</h3>
+					<img src="'.$livros->capa.'">
+					<br>
+					<br>
+
+				';
+			}
+
+		?>
 	</div>
+	</div>
+
 </div>
