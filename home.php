@@ -222,3 +222,38 @@ table tr td{
 	</div>
 
 </div>
+
+<form method="post">
+	Livro:
+	<select name="item">
+		<?php
+			$acervo = ListarLivro(0);
+			while($livro = $acervo->fetch_object()){
+				$capa = ($livro->capa !="") ? $livro->capa : 'imgs/sem_capa.png';
+			echo '<option value="'.$livro->cd.'">'.$livro->titulo.'</option>' ;
+			}
+			?>
+		</select>
+		Pessoa:
+		<select name ="pessoa">
+			<?php
+				$todos = ListarUsuario(0);
+				while($p = $acervo->fetch_object()){
+					echo '<option value="'.$p->rm.'">'.$p->nome.'</option>' ;
+				}
+				?>
+		</select>
+		<select name="prazo">
+			<option value="7">1 Semana</option>
+			<option value="15">15 Dias</option>
+			<option value="30"> 30 Dias</option>
+		</select>
+		<br>
+		<button>Emprestar</button>
+	</form>
+	<?php
+		if(isset($_POST['pessoa'])){
+			Emprestar($_POST['pessoa'],$_POST['item'],$_POST['prazo']);
+	}
+	?>
+	<?php 

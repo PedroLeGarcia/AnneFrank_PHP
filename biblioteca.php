@@ -175,14 +175,46 @@ function ExcluirEditora($cd){
 }
 
 function CadastrarLivro($isbn, $titulo, $ano, $qtd, $sinopse, $classificacao, $id_editora, $id_genero, $estado, $$capa, $autores){
-	$sql = 'INSERT INTO livro(isbn, titulo, ano, qtd, sinopse, classificacao, id_editora, id_genero, estado, capa) VALUES ("'.$isbn.'","'.$titulo.'","'.$ano.'","'.$qtd. '","'.$sinopse.'","'.$classificacao.'","'.$id_editora.'","'.$id_genero.'","'.$estado.'","'.$capa.'")';
+	$sql = 'INSERT INTO livro VALUES (null,
+	"'.$isbn.'",
+	"'.$titulo.'",
+	'.$ano.',
+	'.$qtd.',
+	"'.$sinopse.'",
+	"'.$capa['nome'].'",
+	"'.$classificacao.'",
+	'.$editora.',
+	'.$genero.',
+	"'.$estado.'")';
 	$res = $GLOBALS['conn']->query($sql);
+	$id = $GLOBALS['conn']->insert_id;
 	if($res){
-		echo "Livro cadastrado com sucesso!!!";
-	}else{
-		echo "Erro ao cadastrar";
+		if(!is_dir('imgs/'.$id.'/')){
+			mkdir('imgs/'.$id.'/');	
+		}
+		$destino = 'imgs/'.$id.'/'.$capa['name'];
+		if(move_uploaded_file($capa['tmp_name'], $destino)){
+
+			$cadastro2 = 'INSERT INTO autor_livro VALUES ';
+			$total_autores = count($autores);
+			for($i = 0;$i< $total_autores, $i++){
+				$cadastro2 .= '('.$id.','.$autores[$i].'),'; 
+			} 
+			$cadastro2 = substr($cadastro2, 0, -1);
+			$cadastro2 .= ';';
+			$res2 = $GLOBALS['conn']->query($cadastro2);
+			if($res2){
+				echo "Livro cadastrado com sucesso"
+			}else{
+				echo "Erro ao vincular autores";
+			}else{
+				echo "Erro ao salvar foto dos livros: ".$GLOBALS['conn']->insert_id;
+			}
+		}else{
+			echo "Erro ao cadastrar";
+		}
+		
 	}
-	
 } 
 
 
@@ -193,4 +225,16 @@ function ListarLivro($cd){
 	} 
 	$res = $GLOBALS['conn']->query($sql);
 	return $res;
+}
+
+function Emprestar($usuario,$livro){
+	$prazo = "ADDDATE(CURDATE(), INTERVAL ".$prazo." DAY)";
+	$sql = 'INSERT INTO emprestimo (id_usuario, id_livro, dt_emprestimo, dt_devolucao)
+	VALUES ('.$usuario.','.$livro.',"CURDATE()","'.$prazo.'")';
+	$res = $GLOBALS['conn']->query($sql);
+	if($res){
+		echo "Empréstimo realizado!";
+	}else{
+		echo "Erro ao registrar empréstimo";
+	}
 }
