@@ -1,5 +1,5 @@
 
-CREATE DATABASE biblioteca20;
+
 USE biblioteca20;
 CREATE TABLE `autor` (
   `cd` int(11) NOT NULL,

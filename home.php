@@ -7,7 +7,7 @@ include('biblioteca.php');
 	padding: 0;
 	box-sizing: border-box;
 	font-family: 'Rubik', sans-serif;
-	color: #fff;
+	color: black;
 }
 body{
 	width: 100%;
@@ -88,7 +88,7 @@ table tr td{
 <div class="container">
 	<div class="form"><br>
 		<div class="form-header">
-			<div class="title"> <h1>Olá<?php echo $_SESSION['nome']; ?>! </h1> </div>
+			<div class="title"> <h1>Olá <?php echo $_SESSION['nome']; ?>! </h1> </div>
 		</div>
 	<div class="input-group">
 		<form id="novoGenero" method="post">
@@ -202,6 +202,46 @@ table tr td{
 	<br><hr><br>
 
 		</div><!--fim do input-group-->
+
+<div class="input-group">
+		<form id="novoLivro" method="post">
+			<div class="input-box">
+				<div class="title"><h2>Digite o título do livro</h2></div>
+				<input type="text" name="livro" placeholder="Nome do Livro...">
+			</div>
+			<label for="ano"> Ano do Livro:</label>
+			<input type="date" name="ano" id="ano">
+			<label for="genero"> Capa do Livro: </label>
+			<input type="file" name="fileToUpload" id="fileToUpload">
+			<input type="text" name= "classf" id="classf" placeholder="Classificação do Livro:">
+			<input type="text" name="estado" id="estado" placeholder="Digite o estado do livro">
+			<label for="genero"> Gênero do Livro: </label>
+			<?php 
+				echo '<select class="select" name="genero" id="genero">';
+				ListarGeneroOff();
+				echo '</select>';
+				?>
+				<label for ="editora"> Editora do Livro: </label>
+				<?php
+					echo '<select class="select" name="editora" id="editora">';
+					ListarEditoraOff();
+					echo '</select>';
+					?>
+				<input type="text" name="autor" id="autor" placeholder="Digite o código do autor:">
+				<input type="text" name="isbn" id="isbn" placeholder="ISBN do Livro: ">
+				<input type="text" name="qtd" id="qtd" placeholder="Quantidade de Livros: ">
+				<input type="text" name="sinopse" id="sinopse" placeholder="Sinopse do Livro: ">
+
+			<div class="bnt">
+				<button>Cadastrar</button>
+			</div>
+		</form>
+<?php
+	if(isset($_POST['livro'])){
+		CadastrarLivro($_POST['livro']);
+	}
+?>
+
 	<div class="livro">
 		<h2>Livros Cadastrados</h2>
 		<?php

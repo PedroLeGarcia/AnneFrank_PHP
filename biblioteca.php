@@ -3,7 +3,7 @@ session_start();
 //conexão
 $user = 'root';
 $pass = '';
-$banco = 'biblioteca';
+$banco = 'biblioteca20';
 $server = 'localhost';
 $conn = new mysqli($server,$user,$pass,$banco);
 if(!$conn){
@@ -174,7 +174,7 @@ function ExcluirEditora($cd){
 	}
 }
 
-function CadastrarLivro($isbn, $titulo, $ano, $qtd, $sinopse, $classificacao, $id_editora, $id_genero, $estado, $$capa, $autores){
+function CadastrarLivro($isbn, $titulo, $ano, $qtd, $sinopse, $classificacao, $id_editora, $id_genero, $estado, $capa, $autores){
 	$sql = 'INSERT INTO livro VALUES (null,
 	"'.$isbn.'",
 	"'.$titulo.'",
@@ -197,16 +197,17 @@ function CadastrarLivro($isbn, $titulo, $ano, $qtd, $sinopse, $classificacao, $i
 
 			$cadastro2 = 'INSERT INTO autor_livro VALUES ';
 			$total_autores = count($autores);
-			for($i = 0;$i< $total_autores, $i++){
+			for($i = 0;$i< $total_autores; $i++){
 				$cadastro2 .= '('.$id.','.$autores[$i].'),'; 
 			} 
 			$cadastro2 = substr($cadastro2, 0, -1);
 			$cadastro2 .= ';';
 			$res2 = $GLOBALS['conn']->query($cadastro2);
 			if($res2){
-				echo "Livro cadastrado com sucesso"
+				echo "Livro cadastrado com sucesso";
 			}else{
 				echo "Erro ao vincular autores";
+			}
 			}else{
 				echo "Erro ao salvar foto dos livros: ".$GLOBALS['conn']->insert_id;
 			}
@@ -215,7 +216,7 @@ function CadastrarLivro($isbn, $titulo, $ano, $qtd, $sinopse, $classificacao, $i
 		}
 		
 	}
-} 
+
 
 
 function ListarLivro($cd){
