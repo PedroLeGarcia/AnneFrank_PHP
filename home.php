@@ -85,123 +85,26 @@ table tr td{
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 </style>
-<div class="container">
-	<div class="form"><br>
-		<div class="form-header">
-			<div class="title"> <h1>Olá <?php echo $_SESSION['nome']; ?>! </h1> </div>
-		</div>
-	<div class="input-group">
-		<form id="novoGenero" method="post">
-			<div class="input-box">
-				<div class="title"><h2>Novo Genêro</h2></div>
-				<input type="text" name="genero" placeholder="Nome do Genêro...">
-			</div>
-			<div class="bnt">
-				<button>Cadastrar</button>
-			</div>
-		</form>
-<?php
-	if(isset($_POST['genero'])){
-		CadastrarGenero($_POST['genero']);
-	}
-?>
-<h2>Gêneros Cadastrados</h2>
-<table>
-	<tr>
-		<td>Nome</td>
-		<td>#</td>
-	</tr>
-	<?php
-		if(isset($_GET['excluir_gen'])){
-			ExcluirGenero($_GET['excluir_gen']);
-		}
-		$todos = ListarGenero("");
-		while($gen = $todos->fetch_object()){
-			echo '<tr>
-					<td>'.$gen->nome.'</td>
-					<td>
-						<a href="?excluir_gen='.$gen->cd.'">Excluir</a>
-					</td>
-				</tr>';		}
-	?>
-	</table>
-	</div> <!--fim do input-group-->
 
-	<div class="input-group">
-		<form id="novoAutor" method="post">
-			<div class="input-box">
-				<div class="title"><h2>Novo Autor</h2></div>
-				<input type="text" name="autor" placeholder="Nome do Autor...">
-			</div>
-			<div class="bnt">
-				<button>Cadastrar</button>
-			</div>
-		</form>
-<?php
-	if(isset($_POST['autor'])){
-		CadastrarAutor($_POST['autor']);
-	}
-?>
-
-<h2>Autores Cadastrados</h2>
-<table>
-	<tr>
-		<td>Nome</td>
-		<td>#</td>
-	</tr>
-	<?php
-		if(isset($_GET['excluir_autor'])){
-			ExcluirGenero($_GET['excluir_autor']);
-		}
-		$todos = ListarAutor("");
-		while($autor = $todos->fetch_object()){
-			echo '<tr>
-					<td>'.$autor->nome.'</td>
-					<td>
-						<a href="?excluir_autor='.$autor->cd.'">Excluir</a>
-					</td>
-				</tr>';		}
-	?>
-	</table>
-	</div>
 	
+<div class="livro">
+		<h2>Livros Cadastrados</h2>
+		<?php
+			$fLivro = ListarLivro("");
+			while ($livros = $fLivro->fetch_object()) {
+				echo '
+					<br>
+					<h3>'.$livros->titulo.'</h3>
+					<img src="'.$livros->capa.'">
+					<br>
+					<br>
 
-	<div class="input-group">
-		<form id="novaEditora" method="post">
-			<div class="input-box">
-				<div class="title"><h2>Nova Editora</h2></div>
-				<input type="text" name="editora" placeholder="Nome da Editora...">
-			</div>
-			<div class="bnt">
-				<button>Cadastrar</button>
-			</div>
-		</form>
-<?php
-	if(isset($_POST['editora'])){
-		CadastrarEditora($_POST['editora']);
-	}
-?>
+				';
+			}
 
-<h2>Editoras Cadastradas</h2>
-<table>
-	<tr>
-		<td>Nome</td>
-		<td>#</td>
-	</tr>
-	<?php
-		if(isset($_GET['excluir_editora'])){
-			ExcluirEditora($_GET['excluir_editora']);
-		}
-		$todos = ListarEditora("");
-		while($editora = $todos->fetch_object()){
-			echo '<tr>
-					<td>'.$editora->nome.'</td>
-				</tr>';		}
-	?>
-	</table>
-	<br><hr><br>
-
-		</div><!--fim do input-group-->
+		?>
+	</div>
+	</div>
 
 <div class="input-group">
 		<form id="novoLivro" method="post">
@@ -242,24 +145,7 @@ table tr td{
 	}
 ?>
 
-	<div class="livro">
-		<h2>Livros Cadastrados</h2>
-		<?php
-			$fLivro = ListarLivro("");
-			while ($livros = $fLivro->fetch_object()) {
-				echo '
-					<br>
-					<h3>'.$livros->titulo.'</h3>
-					<img src="'.$livros->capa.'">
-					<br>
-					<br>
-
-				';
-			}
-
-		?>
-	</div>
-	</div>
+	
 
 </div>
 

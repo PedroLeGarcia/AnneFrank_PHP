@@ -1,4 +1,4 @@
-
+CREATE DATABASE biblioteca20;
 
 USE biblioteca20;
 CREATE TABLE `autor` (
