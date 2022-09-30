@@ -1,22 +1,69 @@
 <?php
 include('biblioteca.php');
 ?>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap" rel="stylesheet"> 
 <style type="text/css">
 *{
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Rubik', sans-serif;
-	color: black;
+	font-family: 'Inter', sans-serif;
 }
 body{
 	width: 100%;
     min-height: 100%;
     background: #2980B9;  
-    background: radial-gradient(#2980B9,#6DD5FA );
 }
-.container{
+header{
+	background-color: #000080;
+	box-shadow: 0px 3px 10px #464646;
+}
+.nav-bar{
 	display: flex;
+	justify-content: space-between;
+	padding: 1.5rem 6rem;
+}
+.logo img{
+	width: 50px;
+	border-radius: 50%;
+	border: 2px solid #fff;
+}
+.nav-listem{
+	display: flex;
+	justify-content: center;
+}
+.nav-listem ul{
+	display: flex;
+	align-items: center;
+	list-style: none;
+}
+.nav-item{
+	margin: 0 15px;
+}
+.nav-link{
+	text-decoration: none;
+	font-size: 1.15rem;
+	color: #fff;
+	font-weight: 400;
+}
+.nav-link:hover{
+    color: #1E90FF;
+}
+.nav-btn button{
+	border: none;
+	background-color: transparent;
+	padding: 10px 15px;
+	border-radius: 5px;
+	transition: 0.5s;
+}
+.nav-btn button:hover{
+	background-color: #1E90FF;
+}
+.nav-btn button a{
+	text-decoration: none;
+	color: #fff;
+	font-weight: 500;
+	font-size: 1.1rem;
 }
 .form{
 	width: 100%;
@@ -29,9 +76,7 @@ body{
 .title{
 	display: flex;
 	justify-content: center;
-}
-.title h1{
-	margin-bottom: 0.5rem;
+	color: #fff;
 }
 .input-group{
 	display: flex;
@@ -57,37 +102,32 @@ body{
 .input-box input:hover{
 	background-color: #eeeeee75;
 }
-.bnt button{
-	padding: 10px 100px;
-	font-size: 20px;
-	background-color: #fff;
-	border: 1px solid #fff;
-	border-radius: 5px;
-	cursor: pointer;
-	color: #1E90FF;
-	transition: 0.5s;
-}
-.bnt button:hover{
-	background-color: #1E90FF;
-	color: #fff;
-}
-table tr td{
-	color: #fff;
-}
-.livro{
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-
-}
-.livro img{
-	width: 10rem;
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+.card{
+	width:18rem;
 }
 </style>
+<div class="container">
+	<div class="header-anne">
+		<header>
+			<nav class="nav-bar">
+				<div class="logo">
+					<a href="#" class="logo"><img src="img/logo.jpeg"></a>
+				</div>
+				<div class="nav-listem">
+					<ul>
+						<li class="nav-item"><a href="editoras.php" class="nav-link">Editoras</a></li>
+						<li class="nav-item"><a href="autores.php" class="nav-link">Autores</a></li>
+						<li class="nav-item"><a href="home.php" class="nav-link">Livros</a></li>
+						<li class="nav-item"><a href="generos.php" class="nav-link">Gêneros</a></li>
+					</ul>
+				</div>
+        		</div>
+   			</nav>
+		</header>
+		</div><!-- Fim da header-anne-->
+	</div>
 
-	
-<div class="livro">
+	<div class="card" style="width: 18rem;">
 		<h2>Livros Cadastrados</h2>
 		<?php
 			$fLivro = ListarLivro("");
@@ -104,82 +144,6 @@ table tr td{
 
 		?>
 	</div>
-	</div>
-
-<div class="input-group">
-		<form id="novoLivro" method="post">
-			<div class="input-box">
-				<div class="title"><h2>Digite o título do livro</h2></div>
-				<input type="text" name="livro" placeholder="Nome do Livro...">
-			</div>
-			<label for="ano"> Ano do Livro:</label>
-			<input type="date" name="ano" id="ano">
-			<label for="genero"> Capa do Livro: </label>
-			<input type="file" name="fileToUpload" id="fileToUpload">
-			<input type="text" name= "classf" id="classf" placeholder="Classificação do Livro:">
-			<input type="text" name="estado" id="estado" placeholder="Digite o estado do livro">
-			<label for="genero"> Gênero do Livro: </label>
-			<?php 
-				echo '<select class="select" name="genero" id="genero">';
-				ListarGeneroOff();
-				echo '</select>';
-				?>
-				<label for ="editora"> Editora do Livro: </label>
-				<?php
-					echo '<select class="select" name="editora" id="editora">';
-					ListarEditoraOff();
-					echo '</select>';
-					?>
-				<input type="text" name="autor" id="autor" placeholder="Digite o código do autor:">
-				<input type="text" name="isbn" id="isbn" placeholder="ISBN do Livro: ">
-				<input type="text" name="qtd" id="qtd" placeholder="Quantidade de Livros: ">
-				<input type="text" name="sinopse" id="sinopse" placeholder="Sinopse do Livro: ">
-
-			<div class="bnt">
-				<button>Cadastrar</button>
-			</div>
-		</form>
-<?php
-	if(isset($_POST['livro'])){
-		CadastrarLivro($_POST['livro']);
-	}
-?>
-
 	
 
-</div>
-
-<form method="post">
-	Livro:
-	<select name="item">
-		<?php
-			$acervo = ListarLivro(0);
-			while($livro = $acervo->fetch_object()){
-				$capa = ($livro->capa !="") ? $livro->capa : 'imgs/sem_capa.png';
-			echo '<option value="'.$livro->cd.'">'.$livro->titulo.'</option>' ;
-			}
-			?>
-		</select>
-		Pessoa:
-		<select name ="pessoa">
-			<?php
-				$todos = ListarUsuario(0);
-				while($p = $acervo->fetch_object()){
-					echo '<option value="'.$p->rm.'">'.$p->nome.'</option>' ;
-				}
-				?>
-		</select>
-		<select name="prazo">
-			<option value="7">1 Semana</option>
-			<option value="15">15 Dias</option>
-			<option value="30"> 30 Dias</option>
-		</select>
-		<br>
-		<button>Emprestar</button>
-	</form>
-	<?php
-		if(isset($_POST['pessoa'])){
-			Emprestar($_POST['pessoa'],$_POST['item'],$_POST['prazo']);
-	}
-	?>
-	<?php 
+	
