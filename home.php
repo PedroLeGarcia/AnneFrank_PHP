@@ -144,6 +144,224 @@ header{
 
 		?>
 	</div>
+
+	<div class="containerGen">
+            <div class="header">
+                <h2>Livros Cadastrados</h2>
+                <p>Você pode adicionar, visualizar e editar novos livros.</p>
+            </div>
+
+            <div class="modalContainer">
+                <button class="btnAdd" id="open-modal"><i class="fa-solid fa-plus"></i> Adicionar Livro</button>
+                <div id="fade" class="hide"></div>
+
+                <div id="modal" class="hide">
+                    <div class="modal-header">
+                      <div class="text">
+                        <i class="fa-solid fa-book"></i>
+                        <h2>Cadastrar Livro</h2>
+                      </div>
+                        <button id="close-modal"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form method="POST">
+                            <input type="number" name="isbn" id="isbn" placeholder="Isbn">
+                            <input type="text" name="titulo" id="titulo" placeholder="Titulo">
+
+                            <div class="numberBox">
+                                <input type="number" name="ano" id="ano" placeholder="Ano">
+                                <input type="number" name="qtd" id="qtd" placeholder="Qtd">
+                            </div>
+
+                            <textarea name="sinopse" id="sinopse" placeholder="sinopse"></textarea>
+
+                            <input type="text" name="classificacao" id="classificacao" placeholder="Classificação">
+                            <input type="text" name="capa" id="capa" placeholder="Url capa">
+                            
+                            <div class="numberBox">
+                                <select name="id_editora" id="editora">
+                                    <option value="#">Selecione uma Editora</option>
+                                    <?php
+                                        $editora = ListarEditora("");
+                                        while($book = $editora->fetch_object()){
+                                            echo '
+                                                                            
+                                            <option value="'.$livro->cd.'">'.$livro->nome.'</option>
+                                            ';
+                                        }
+                                    ?>
+                                </select>
+                                <select name="id_genero" id="genero">
+                                    <option value="#">Selecione um Gênero</option>
+                                    <?php
+                                        $genero = ListarGenero("");
+                                        while($livro = $genero->fetch_object()){
+                                            echo '
+                                                                            
+                                            <option value="'.$livro->cd.'">'.$livro->nome.'</option>
+                                            ';
+                                        }
+                                    ?>                                    
+                                </select>
+                                <select name="id_autor" id="autor">
+                                  <option value="#">Selecione um Autor</option>
+                                    <?php
+                                        $autor = ListarAutor("");
+                                        while($livro = $autor->fetch_object()){
+                                            echo '
+                                                                            
+                                            <option value="'.$livro->cd.'">'.$livro->nome.'</option>
+                                            ';
+                                        }
+                                    ?>  
+                                </select>
+                            </div>
+
+                            <input type="text" name="estado" id="estado" placeholder="Estado">
+
+                            <input type="submit" id="enviar" value="Enviar">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+                <?php
+                   if(isset($_POST['isbn'],$_POST['titulo'],$_POST['ano'],$_POST['qtd'],$_POST['sinopse'],$_POST['classificacao'],$_POST['id_editora'],$_POST['id_genero'],$_POST['id_autor'],$_POST['estado'],$_POST['capa'])){
+                      CadastrarLivro($_POST['isbn'],$_POST['titulo'],$_POST['ano'],$_POST['qtd'],$_POST['sinopse'],$_POST['classificacao'],$_POST['id_editora'],$_POST['id_genero'],$_POST['id_autor'],$_POST['estado'],$_POST['capa']);
+                    } 
+                ?>
+
+            <br>
+                
+            <table>
+                <tr>
+                    <th>Título</th>
+                    <th>Status</th>
+                    <th>Edidora</th>
+                    <th>Gênero</th>
+                    <th>Quantidade</th>
+                </tr>
+                <?php
+                    $todos = ListarLivro("");
+                    while($livro = $todos->fetch_object()){
+                        echo '
+                        <tr>
+                            <td class="titulo">'.$livro->titulo.'</td>
+                            <td>'.$livro->estado.'</td>
+                            <td>'.$livro->id_editora.'</td>
+                            <td>'.$livro->id_genero.'</td>
+                            <td>'.$livro->qtd.'</td>
+                        </tr>
+                    ';
+                    }
+                ?>
+            </table>
+        </div>
+    </div>
+
+	<div class="containerGen">
+            <div class="header">
+                <h2>Empréstimos Cadastrados</h2>
+                <p>Você pode adicionar, visualizar e editar novos empréstimos.</p>
+            </div>
+
+            <div class="modalContainer">
+                <button class="btnAdd" id="open-modal"><i class="fa-solid fa-plus"></i> Adicionar Empréstimo</button>
+                <div id="fade" class="hide"></div>
+
+                <div id="modal" class="hide">
+                    <div class="modal-header">
+                        <div class="text">
+                            <i class="fa-solid fa-handshake"></i>
+                            <h2>Cadastrar Empréstimo</h2>
+                        </div>
+                        <button id="close-modal"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form method="POST">
+                            <select name="id_usuario" id="id_usuario">
+                                <option value="$">Selecione um Usuário</option>
+                                <?php
+                                    $funcUser = ListarUsuario("");
+                                        while($user = $funcUser->fetch_object()){
+                                        echo '<option value="'.$user->rm.'">'.$user->nome.'</option>';
+                                        }
+                                ?>        
+                            </select>
+                            <select name="id_livro" id="id_livro">
+                                <option value="#">Selecione um Livro</option>
+                                <?php
+                                    $todos = ListarLivro("");
+                                        while($book = $todos->fetch_object()){
+                                        echo '<option value="'.$book->cd.'">'.$book->titulo.'</option>';
+                                        }
+                                ?>
+                            </select>
+
+                            <br>
+
+                            <div class="numberBox">
+                                <span style="display: flex;flex-direction: column;">
+                                    <label for="">Data de Empréstimo:</label>
+                                    <input type="date" name="dt_emprestimo" id="dt_emprestimo">
+                                </span>
+                                <span style="display: flex;flex-direction: column;">
+                                    <label for="">Data de Devolução:</label>  
+                                    <input type="date" name="dt_devolucao" id="dt_devolucao">
+                                </span>
+                                
+                            </div>
+                            
+
+                            <input type="submit" id="enviar" value="Enviar">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <?php
+                if(isset($_POST['id_usuario'], $_POST['id_livro'], $_POST['dt_emprestimo'], $_POST['dt_devolucao'])){
+                    CadastrarEmprestimo($_POST['id_usuario'], $_POST['id_livro'], $_POST['dt_emprestimo'], $_POST['dt_devolucao']);
+                }
+            ?>
+
+			 <br>
+                
+            <table>
+                <tr>
+                    <th>Usuário</th>
+                    <th>Livro</th>
+                    <th>Retirada</th>
+                    <th>Devolução</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+                <?php
+                    if(isset($_GET['cheack_emprestimo'])){
+                        ValidarEmprestimo($_GET['cheack_emprestimo']);
+                    }
+
+                    $funcEmprestimo = ListarEmprestimo("");
+                    while($emprestimo = $funcEmprestimo->fetch_object()){
+                        echo ' <tr>
+                                <td>'.$emprestimo->id_usuario.'</td>
+                                <td>'.$emprestimo->id_livro.'</td>
+                                <td>'.$emprestimo->dt_emprestimo.'</td>
+                                <td>'.$emprestimo->dt_devolucao.'</td>
+                                <td>'.$emprestimo->status.'</td>
+                                <td>
+                                <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                <a href="?cheack_emprestimo='.$emprestimo->cd.'"><i class="fa-solid fa-square-check"></i></a>
+                                </td>
+                               </tr>';
+                    }
+                ?>
+                
+            </table>
+        </div>
+    </div>
 	
 
 	
