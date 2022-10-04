@@ -73,17 +73,25 @@ header{
     flex-direction: column;
     padding: 3rem;
 }
-.title{
+.header h2{
 	display: flex;
 	justify-content: center;
 	color: #fff;
 }
-.input-group{
+.header p{
+    text-align: center;
+    color: #fff;
+}
+.header th{
+    color: #fff;
+}
+
+.modalContainer{
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 }
-.input-box{
+.hide{
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 0.5rem
@@ -102,8 +110,27 @@ header{
 .input-box input:hover{
 	background-color: #eeeeee75;
 }
-.card{
-	width:18rem;
+.dados{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.productBox{
+    width: 25rem;
+   padding: 1.5rem;
+   margin: 0.5rem;
+   background-color: #f8f8ff;
+   border: 1px solid lightgray;
+   box-shadow: 1px 3px 1px #0000001c;
+}
+.productBox h1{
+    font-weight: 500;
+    text-align: center;
+    font-size: 1.5rem;
+}
+.productBox img{
+    width: 15rem;
 }
 </style>
 <div class="container">
@@ -125,25 +152,7 @@ header{
    			</nav>
 		</header>
 		</div><!-- Fim da header-anne-->
-	</div>
-
-	<div class="card" style="width: 18rem;">
-		<h2>Livros Cadastrados</h2>
-		<?php
-			$fLivro = ListarLivro("");
-			while ($livros = $fLivro->fetch_object()) {
-				echo '
-					<br>
-					<h3>'.$livros->titulo.'</h3>
-					<img src="'.$livros->capa.'">
-					<br>
-					<br>
-
-				';
-			}
-
-		?>
-	</div>
+	</div><br>
 
 	<div class="containerGen">
             <div class="header">
@@ -153,11 +162,10 @@ header{
 
             <div class="modalContainer">
                 <button class="btnAdd" id="open-modal"><i class="fa-solid fa-plus"></i> Adicionar Livro</button>
-                <div id="fade" class="hide"></div>
-
                 <div id="modal" class="hide">
                     <div class="modal-header">
-                      <div class="text">
+                    <br>
+                      <div class="header">
                         <i class="fa-solid fa-book"></i>
                         <h2>Cadastrar Livro</h2>
                       </div>
@@ -231,10 +239,9 @@ header{
                       CadastrarLivro($_POST['isbn'],$_POST['titulo'],$_POST['ano'],$_POST['qtd'],$_POST['sinopse'],$_POST['classificacao'],$_POST['id_editora'],$_POST['id_genero'],$_POST['id_autor'],$_POST['estado'],$_POST['capa']);
                     } 
                 ?>
-
-            <br>
-                
-            <table>
+            <center>
+            <div class="header">
+                <table>
                 <tr>
                     <th>Título</th>
                     <th>Status</th>
@@ -257,9 +264,11 @@ header{
                     }
                 ?>
             </table>
+            </div>   
+        </center>
         </div>
     </div>
-
+<br>
 	<div class="containerGen">
             <div class="header">
                 <h2>Empréstimos Cadastrados</h2>
@@ -272,14 +281,15 @@ header{
 
                 <div id="modal" class="hide">
                     <div class="modal-header">
-                        <div class="text">
+                        <br>
+                        <div class="header">
                             <i class="fa-solid fa-handshake"></i>
                             <h2>Cadastrar Empréstimo</h2>
                         </div>
                         <button id="close-modal"><i class="fa-solid fa-xmark"></i></button>
                     </div>
 
-                    <div class="modal-body">
+                    <div class="modalContainer">
                         <form method="POST">
                             <select name="id_usuario" id="id_usuario">
                                 <option value="$">Selecione um Usuário</option>
@@ -302,7 +312,7 @@ header{
 
                             <br>
 
-                            <div class="numberBox">
+                        
                                 <span style="display: flex;flex-direction: column;">
                                     <label for="">Data de Empréstimo:</label>
                                     <input type="date" name="dt_emprestimo" id="dt_emprestimo">
@@ -312,8 +322,7 @@ header{
                                     <input type="date" name="dt_devolucao" id="dt_devolucao">
                                 </span>
                                 
-                            </div>
-                            
+                                
 
                             <input type="submit" id="enviar" value="Enviar">
                         </form>
@@ -326,10 +335,9 @@ header{
                     CadastrarEmprestimo($_POST['id_usuario'], $_POST['id_livro'], $_POST['dt_emprestimo'], $_POST['dt_devolucao']);
                 }
             ?>
-
-			 <br>
-                
-            <table>
+            <center>
+            <div class="header">
+                <table>
                 <tr>
                     <th>Usuário</th>
                     <th>Livro</th>
@@ -360,6 +368,26 @@ header{
                 ?>
                 
             </table>
+            </div>
+        </center>
+        </div>
+        <div class="dados">   
+        <?php
+            $fLivro = ListarLivro("");
+            while ($livros = $fLivro->fetch_object()) {
+                echo '
+                    <center>
+                    <div class="productBox"
+                    <h1>'.$livros->titulo.'</h1>
+                    <br>
+                    <img src="'.$livros->capa.'">
+                    <br>
+                    </center>
+
+                ';
+            }
+
+        ?>
         </div>
     </div>
 	
