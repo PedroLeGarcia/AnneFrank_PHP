@@ -228,6 +228,16 @@ function ListarLivro($cd){
 	return $res;
 }
 
+ function ExcluirLivro($cd){
+    $sql = 'DELETE FROM livro WHERE cd ='.$cd;
+    $res = $GLOBALS['conn']->query($sql);
+    if($res){
+      echo "Livro excluído";
+    } else {
+      echo "Erro ao excluir";
+    }
+  }
+
 function Emprestar($usuario,$livro){
 	$prazo = "ADDDATE(CURDATE(), INTERVAL ".$prazo." DAY)";
 	$sql = 'INSERT INTO emprestimo (id_usuario, id_livro, dt_emprestimo, dt_devolucao)
@@ -238,4 +248,62 @@ function Emprestar($usuario,$livro){
 	}else{
 		echo "Erro ao registrar empréstimo";
 	}
+}
+
+function ListarUsuario($rm){
+        $sqlCmd = 'SELECT * FROM usuario';
+        if($rm != ""){
+            $sqlCmd.= ' WHERE cd = '.$rm;
+        }
+        $res = $GLOBALS['conn']->query($sqlCmd);	
+        return $res;
+    }
+
+
+function ListarEmprestimo($cd){
+    $sqlCmd = 'SELECT * FROM emprestimo';
+    if ($cd>0){
+        $sqlCmd.= 'WHERE cd='.$cd;
+    }
+    $res = $GLOBALS ['conn']->query($sqlCmd);
+    return $res;
+}
+
+ function ValidarEmprestimo($cd){
+    $sqlCmd = 'DELETE FROM emprestimo WHERE cd ='.$cd;
+    $res = $GLOBALS['conn']->query($sqlCmd);
+    if($res){
+        echo 'Empréstimo Concluido';
+    }else{
+        echo 'Empréstomo com erro!';
+    }
+}
+
+function ExibirQtdLivro() {
+    $sqlCmd = 'SELECT COUNT(cd) AS qtd_livros FROM livro';
+    $res = $GLOBALS['conn']->prepare($sqlCmd);
+    $res->execute();
+
+    $dados = $res->get_result()->fetch_assoc();
+    echo '<p>Total: '.$dados['qtd_livros'].'</p>';
+}
+
+function ExibirQtdEmprestimo(){
+    $sqlCmd = 'SELECT COUNT(cd) AS qtd_emprestimos FROM emprestimo';
+    $res = $GLOBALS['conn']->prepare($sqlCmd);
+    $res->execute();
+
+    $dados = $res->get_result()->fetch_assoc();
+    echo '<p>Total: '.$dados['qtd_emprestimos'].'</p>';  
+}
+
+function ExibirQtdUser() {
+    $sqlCmd = 'SELECT COUNT(rm) AS qtd_usuarios FROM usuario';
+    $res = $GLOBALS['conn']->prepare($sqlCmd);
+    $res->execute();
+
+    $dados = $res->get_result()->fetch_assoc();
+    echo '
+        <p>Total: '.$dados['qtd_usuarios'].'</p>
+        ';
 }
